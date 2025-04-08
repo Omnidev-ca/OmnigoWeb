@@ -30,7 +30,7 @@ export default function HomePage() {
               path: roadPath,
               align: roadPath,
               alignOrigin: [0.5, 0.5],
-              autoRotate: 180,
+              autoRotate: true,
             },
             ease: "none",
             scrollTrigger: {

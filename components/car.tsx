@@ -72,7 +72,7 @@ export function Car() {
 
       {/* Headlights */}
       <div
-        className="absolute bg-white"
+        className="absolute bg-[#ff6b6b]"
         style={{
           width: "5px",
           height: "5px",
@@ -82,7 +82,7 @@ export function Car() {
         }}
       />
       <div
-        className="absolute bg-[#ff6b6b]"
+        className="absolute bg-white"
         style={{
           width: "5px",
           height: "5px",
