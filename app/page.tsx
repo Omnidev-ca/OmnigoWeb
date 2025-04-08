@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { MotionPathPlugin } from "gsap/MotionPathPlugin"
@@ -14,6 +14,7 @@ export default function HomePage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const carRef = useRef<HTMLDivElement>(null)
   const roadRef = useRef<SVGSVGElement>(null)
+  const [language, setLanguage] = useState<"fr" | "en">("fr")
 
   useEffect(() => {
     // Register GSAP plugins
@@ -65,9 +66,28 @@ export default function HomePage() {
     return () => ctx.revert()
   }, [])
 
+  const toggleLanguage = () => {
+    setLanguage(language === "fr" ? "en" : "fr")
+  }
+
   return (
     <main className="relative overflow-hidden bg-white">
       <Header />
+
+      {/* Language Switcher */}
+      <div className="fixed top-20 left-4 z-50">
+        <button 
+          onClick={toggleLanguage}
+          className="flex items-center justify-center w-10 h-10 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300"
+          aria-label={language === "fr" ? "Switch to English" : "Passer au français"}
+        >
+          {language === "fr" ? (
+            <span className="text-sm font-bold">🇫🇷</span>
+          ) : (
+            <span className="text-sm font-bold">🇬🇧</span>
+          )}
+        </button>
+      </div>
 
       <div ref={containerRef} className="relative mt-[130px]">
         {/* Road spans the entire page */}
@@ -111,10 +131,7 @@ export default function HomePage() {
           </section>
 
           <section className="section absolute top-[315vh] right-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-            <h2 className="text-4xl font-bold mb-4">Engagement écologique</h2>
-            <p className="text-lg mb-6 text-[#4d4d4f]">
-              Nous réduisons l'empreinte carbone avec notre flotte de véhicules écologiques.
-            </p>
+            <p className="text-lg text-[#4d4d4f] text-center mb-8">Nous offrons une présence numérique forte et multicanale à des prix honnêtes grâce à notre équipe multidisciplinaire. Notre service est transparent, rapide et flexible, afin de vous aider à atteindre vos objectifs et à réussir sur le marché en ligne.</p>
             <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Notre impact</Button>
           </section>
 
@@ -201,9 +218,59 @@ export default function HomePage() {
                 </div>
                 
                 {/* Bouton pour voir plus de logos */}
-                <button className="mx-auto mt-2 px-4 py-2 bg-[#7DF9FF] text-black rounded-md text-sm font-medium hover:bg-[#7DF9FF]/80 transition-colors">
+                <button 
+                  onClick={() => {
+                    const modal = document.getElementById('clientsModal');
+                    if (modal) modal.classList.remove('hidden');
+                  }}
+                  className="mx-auto mt-2 px-4 py-2 bg-[#7DF9FF] text-black rounded-md text-sm font-medium hover:bg-[#7DF9FF]/80 transition-colors"
+                >
                   Voir tous nos clients
                 </button>
+                
+                {/* Modal popup pour afficher tous les logos */}
+                <div id="clientsModal" className="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+                  <div className="bg-white rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-xl font-bold">Nos clients</h3>
+                      <button 
+                        onClick={() => {
+                          const modal = document.getElementById('clientsModal');
+                          if (modal) modal.classList.add('hidden');
+                        }}
+                        className="text-gray-500 hover:text-black"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/Akisens-300x134.png" alt="Logo client 1" className="max-h-16 w-auto object-contain" />
+                      </div>
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/Arts-et-Ville-300x126.png" alt="Logo client 2" className="max-h-16 w-auto object-contain" />
+                      </div>
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/Berkayly-300x59.png" alt="Logo client 3" className="max-h-16 w-auto object-contain" />
+                      </div>
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/Pacte-de-rue-300x78.png" alt="Logo client 4" className="max-h-16 w-auto object-contain" />
+                      </div>
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/SKAL-300x133.png" alt="Logo client 5" className="max-h-16 w-auto object-contain" />
+                      </div>
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/Visibilite-360.png" alt="Logo client 6" className="max-h-16 w-auto object-contain" />
+                      </div>
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/HappieRH.png" alt="Logo client 7" className="max-h-16 w-auto object-contain" />
+                      </div>
+                      <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
+                        <img src="/logo_entreprises/La-Station-300x74.jpeg" alt="Logo client 8" className="max-h-16 w-auto object-contain" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
