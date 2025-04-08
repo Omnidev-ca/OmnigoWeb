@@ -101,10 +101,13 @@ export default function HomePage() {
           </section>
 
           <section className="section absolute top-[215vh] left-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-            <h2 className="text-4xl font-bold mb-4">Technologie avancée</h2>
-            <p className="text-lg mb-6 text-[#4d4d4f]">
-              Notre plateforme utilise les dernières technologies pour optimiser chaque trajet.
-            </p>
+            <h2 className="text-4xl font-bold mb-4">NOS SERVICES</h2>
+            <ul className="text-lg mb-6 text-[#4d4d4f] space-y-2">
+              <li>Planification stratégique</li>
+              <li>Marketing numérique</li>
+              <li>Programmation</li>
+              <li>Performances publicitaires</li>
+            </ul>
             <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Découvrir</Button>
           </section>
 
@@ -116,12 +119,66 @@ export default function HomePage() {
             <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Notre impact</Button>
           </section>
 
-          <section className="section absolute top-[415vh] left-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-            <h2 className="text-4xl font-bold mb-4">Contactez-nous</h2>
-            <p className="text-lg mb-6 text-[#4d4d4f]">
-              Prêt à transformer votre expérience de transport? Contactez notre équipe dès aujourd'hui.
-            </p>
-            <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Contact</Button>
+          <section className="section absolute top-[415vh] left-[10vw] z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
+            <h2 className="text-4xl font-bold mb-4">Nos clients</h2>
+            <div className="w-full overflow-hidden relative">
+              <div className="flex animate-carousel space-x-8 hover:[animation-play-state:paused]">
+                {/* Premier groupe de logos */}
+                <div className="flex space-x-8 min-w-max">
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Akisens-300x134.png" alt="Logo client 1" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Arts-et-Ville-300x126.png" alt="Logo client 2" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Berkayly-300x59.png" alt="Logo client 3" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Pacte-de-rue-300x78.png" alt="Logo client 4" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/SKAL-300x133.png" alt="Logo client 5" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Visibilite-360.png" alt="Logo client 6" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/HappieRH.png" alt="Logo client 7" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/La-Station-300x74.jpeg" alt="Logo client 8" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                </div>
+                {/* Duplication du groupe pour l'effet de boucle infinie */}
+                <div className="flex space-x-8 min-w-max">
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Akisens-300x134.png" alt="Logo client 1" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Arts-et-Ville-300x126.png" alt="Logo client 2" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Berkayly-300x59.png" alt="Logo client 3" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Pacte-de-rue-300x78.png" alt="Logo client 4" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/SKAL-300x133.png" alt="Logo client 5" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/Visibilite-360.png" alt="Logo client 6" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/HappieRH.png" alt="Logo client 7" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-32 h-20 bg-white/90 rounded flex items-center justify-center p-2 hover:bg-white/100 transition-all">
+                    <img src="/logo_entreprises/La-Station-300x74.jpeg" alt="Logo client 8" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
         </div>
       </div>
