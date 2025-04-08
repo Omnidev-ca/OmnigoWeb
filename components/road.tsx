@@ -38,28 +38,6 @@ export const Road = forwardRef<SVGSVGElement>((props, ref) => {
         strokeWidth="1"
         fill="none"
       />
-
-      {/* Key points along the road */}
-      <circle cx="960" cy="150" r="8" fill="#7DF9FF" />
-      <circle cx="960" cy="1150" r="8" fill="#7DF9FF" />
-      <circle cx="960" cy="2150" r="8" fill="#7DF9FF" />
-      <circle cx="960" cy="3150" r="8" fill="#7DF9FF" />
-      <circle cx="960" cy="4150" r="8" fill="#7DF9FF" />
-
-      {/* Scenery elements */}
-      <circle cx="700" cy="800" r="50" fill="#7DF9FF" opacity="0.3" />
-      <circle cx="1200" cy="1500" r="70" fill="#7DF9FF" opacity="0.2" />
-      <circle cx="800" cy="2200" r="40" fill="#7DF9FF" opacity="0.3" />
-      <circle cx="1100" cy="3000" r="60" fill="#7DF9FF" opacity="0.2" />
-      <circle cx="750" cy="3800" r="55" fill="#7DF9FF" opacity="0.3" />
-      <circle cx="1150" cy="4500" r="45" fill="#7DF9FF" opacity="0.2" />
-
-      {/* Additional road elements */}
-      <rect x="1050" y="700" width="100" height="30" rx="5" fill="#4d4d4f" opacity="0.7" />
-      <rect x="750" y="1800" width="120" height="30" rx="5" fill="#4d4d4f" opacity="0.7" />
-      <rect x="1100" y="2700" width="80" height="30" rx="5" fill="#4d4d4f" opacity="0.7" />
-      <rect x="800" y="3500" width="110" height="30" rx="5" fill="#4d4d4f" opacity="0.7" />
-      <rect x="1000" y="4300" width="90" height="30" rx="5" fill="#4d4d4f" opacity="0.7" />
     </svg>
   )
 })

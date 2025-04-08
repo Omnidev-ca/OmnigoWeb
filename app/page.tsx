@@ -108,7 +108,7 @@ export default function HomePage() {
             <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Commencer</Button>
           </section>
 
-          <section className="section absolute top-[115vh] right-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
+          <section className="section absolute top-[90vh] right-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
             <div className="mb-6">
               <img 
                 src="image.png" 
@@ -119,7 +119,7 @@ export default function HomePage() {
             <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">En savoir plus</Button>
           </section>
 
-          <section className="section absolute top-[215vh] left-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
+          <section className="section absolute top-[165vh] left-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
             <h2 className="text-4xl font-bold mb-4">NOS SERVICES</h2>
             <ul className="text-lg mb-6 text-[#4d4d4f] space-y-2">
               <li>Planification stratégique</li>
@@ -130,12 +130,12 @@ export default function HomePage() {
             <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Découvrir</Button>
           </section>
 
-          <section className="section absolute top-[315vh] right-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
+          <section className="section absolute top-[230vh] right-[10vw] max-w-md z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
             <p className="text-lg text-[#4d4d4f] text-center mb-8">Nous offrons une présence numérique forte et multicanale à des prix honnêtes grâce à notre équipe multidisciplinaire. Notre service est transparent, rapide et flexible, afin de vous aider à atteindre vos objectifs et à réussir sur le marché en ligne.</p>
             <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Notre impact</Button>
           </section>
 
-          <section className="section absolute top-[415vh] left-1/2 transform -translate-x-1/2 z-10 bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md max-w-3xl w-[90%] md:left-[10vw] md:transform-none">
+          <section className="section absolute top-[305vh] left-1/2 transform -translate-x-1/2 z-10 bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md max-w-3xl w-[90%] md:left-[10vw] md:transform-none">
             <h2 className="text-4xl font-bold mb-6 text-center">Ils nous font confiance</h2>
             <p className="text-lg text-[#4d4d4f] text-center mb-8">Nous avons établi des relations solides avec nos clients. Devenez notre nouveau client et n'attendez rien de moins que le meilleur de l'industrie.</p>
             
@@ -274,8 +274,71 @@ export default function HomePage() {
               </div>
             </div>
           </section>
+
+          <section className="section absolute top-[380vh] left-1/2 transform -translate-x-1/2 z-10 bg-white/80 backdrop-blur-sm p-8 rounded-lg shadow-md max-w-3xl w-[90%] md:left-auto md:right-[10vw] md:transform-none">
+            <h2 className="text-4xl font-bold mb-6 text-center">Nos Réalisations</h2>
+            <p className="text-lg text-[#4d4d4f] text-center mb-8">Nous sommes fiers de nos projets créatifs et innovants, qui sont conçus sur mesure pour répondre aux besoins de nos clients.</p>
+            
+            {/* Version desktop */}
+            <div className="hidden md:block w-full overflow-hidden relative p-4 bg-white/50 rounded-lg">
+              <div className="flex animate-carousel space-x-8 hover:[animation-play-state:paused]">
+                {/* Premier groupe de logos */}
+                <div className="flex space-x-8 min-w-max">
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/numerique.jpg" alt="Logo client 1" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/publicitaire.jpg" alt="Logo client 2" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/shopify.jpg" alt="Logo client 3" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/identite.jpg" alt="Logo client 4" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                </div>
+                {/* Duplication du groupe pour l'effet de boucle infinie */}
+                <div className="flex space-x-8 min-w-max">
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/numerique.jpg" alt="Logo client 1" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/publicitaire.jpg" alt="Logo client 2" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/shopify.jpg" alt="Logo client 3" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/identite.jpg" alt="Logo client 4" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Version mobile */}
+            <div className="md:hidden w-full overflow-hidden relative p-4 bg-white/50 rounded-lg">
+              <div className="flex flex-col space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/numerique.jpg" alt="Logo client 1" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/publicitaire.jpg" alt="Logo client 2" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/shopify.jpg" alt="Logo client 3" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                  <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                    <img src="/images_realisation/identite.jpg" alt="Logo client 4" className="max-h-16 max-w-28 object-contain" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
+
+      
 
       <Footer />
     </main>
