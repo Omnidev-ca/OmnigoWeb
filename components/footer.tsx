@@ -1,88 +1,87 @@
+"use client"
+
 import Link from "next/link"
-import { OmnigoLogo } from "@/components/omnigo-logo"
+import { Instagram, Facebook, Linkedin, Youtube } from "lucide-react"
+import { OmnigoLogoWhite } from "./omnigo-logo-white"
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-100 py-12">
+    <footer className="bg-black text-white py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="space-y-4">
-            <OmnigoLogo />
-            <p className="text-[#4d4d4f] max-w-xs">
-              Omnigo.ca transforme votre façon de vous déplacer avec des solutions innovantes.
+        <div className="flex flex-col">
+          {/* Logo */}
+          <OmnigoLogoWhite className="flex justify-end" />
+
+          {/* Main content */}
+          <div className="mb-16">
+            <h2 className="text-5xl font-bold mb-24">
+              Suivez le <span className="text-[#7DF9FF]">meilleur</span>
+              <br />
+              chemin...
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="font-bold uppercase mb-2">Téléphone</h3>
+                <p className="text-white/80">(514) 447-9277</p>
+              </div>
+
+              <div>
+                <h3 className="font-bold uppercase mb-2">Adresse</h3>
+                <p className="text-white/80">
+                  3 Place Ville Marie, Suite 400
+                  <br />
+                  Québec, QC, H3B 2E3, Canada
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-bold uppercase mb-2">Contact</h3>
+                <p className="text-white/80">bonjour@omnigo.ca</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Social media */}
+          <div className="mb-16">
+            <h3 className="font-bold uppercase mb-4">Suivez-nous</h3>
+            <div className="flex space-x-6">
+              <Link href="#" className="text-white hover:text-[#7DF9FF] transition-colors">
+                <Instagram size={28} />
+              </Link>
+              <Link href="#" className="text-white hover:text-[#7DF9FF] transition-colors">
+                <Facebook size={28} />
+              </Link>
+              <Link href="#" className="text-white hover:text-[#7DF9FF] transition-colors">
+                <Linkedin size={28} />
+              </Link>
+              <Link href="#" className="text-white hover:text-[#7DF9FF] transition-colors">
+                <Youtube size={28} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Copyright */}
+          <div className="mb-24">
+            <p className="text-white/60 text-sm">
+              © Tous droits réservés, Omnigo.ca Inc, 2019-{new Date().getFullYear()}
             </p>
           </div>
 
-          <div>
-            <h3 className="font-bold text-lg mb-4">Liens rapides</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  Accueil
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  Services
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  À propos
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Arrow up */}
+          <div className="flex justify-center">
+            <Link
+              href="#top"
+              className="text-[#7DF9FF] hover:text-[#7DF9FF]/80 transition-colors"
+              onClick={(e) => {
+                e.preventDefault()
+                window.scrollTo({ top: 0, behavior: "smooth" })
+              }}
+            >
+              <svg width="173" height="153" viewBox="0 0 173 153" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M86.2599 0.0987086L172.023 152.648L86.382 105.911L0.176137 152.846L86.2599 0.0987086Z" fill="#7FF9FF"/>
+              </svg>
 
-          <div>
-            <h3 className="font-bold text-lg mb-4">Services</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  Transport urbain
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  Logistique
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  Solutions d'entreprise
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-                  Événements
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-lg mb-4">Contact</h3>
-            <ul className="space-y-2">
-              <li className="text-[#4d4d4f]">info@omnigo.ca</li>
-              <li className="text-[#4d4d4f]">+1 (123) 456-7890</li>
-              <li className="text-[#4d4d4f]">Montréal, QC, Canada</li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-100 mt-12 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-[#4d4d4f]">© {new Date().getFullYear()} Omnigo.ca. Tous droits réservés.</p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-              Politique de confidentialité
-            </Link>
-            <Link href="#" className="text-[#4d4d4f] hover:text-[#7DF9FF] transition-colors">
-              Conditions d'utilisation
             </Link>
           </div>
         </div>
