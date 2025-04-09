@@ -6,7 +6,7 @@ import { OmnigoLogoWhite } from "./omnigo-logo-white"
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white py-16">
+    <footer className="bg-black text-white py-16 relative z-50">
       <div className="container mx-auto px-4">
         <div className="flex flex-col">
           {/* Logo */}
