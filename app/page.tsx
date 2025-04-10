@@ -84,7 +84,7 @@ export default function HomePage() {
               ease: "none",
               scrollTrigger: {
                 trigger: containerRef.current,
-                start: "-10% top",
+                start: "-5% top",
                 end: isMobile ? `+=${contentHeight}px` : "bottom bottom",
                 scrub: 2,
                 invalidateOnRefresh: true,
@@ -110,9 +110,9 @@ export default function HomePage() {
               ease: "none",
               scrollTrigger: {
                 trigger: containerRef.current,
-                start: "top top",
+                start: "-5% top",
                 end: "bottom bottom",
-                scrub: 2,
+                scrub: 0.5,
                 invalidateOnRefresh: true,
                 refreshPriority: 1
               },

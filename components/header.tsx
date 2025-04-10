@@ -72,14 +72,17 @@ export function Header() {
 
         {/* Menu desktop */}
         <nav className="hidden md:flex items-center space-x-20">
-          <Link href="#" className="text-black hover:underline font-medium transition-colors">
+          <Link href="/" className="text-black hover:underline font-medium transition-colors">
             Accueil
           </Link>
-          <Link href="#" className="text-black hover:underline font-medium transition-colors">
+          <Link href="/services" className="text-black hover:underline font-medium transition-colors">
             Nos services
           </Link>
-          <Link href="#" className="text-black hover:underline font-medium transition-colors">
-            Nous joindre
+          <Link href="/realisations" className="text-black hover:underline font-medium transition-colors">
+            Nos réalisations
+          </Link>
+          <Link href="/contact" className="text-black hover:underline font-medium transition-colors">
+            Contact
           </Link>
         </nav>
 
