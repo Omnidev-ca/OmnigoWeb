@@ -3,8 +3,10 @@
 import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { MapPin, Navigation, Compass, Users, BarChart, Zap } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export function ParallaxSection({ id }: { id: string }) {
+  const router = useRouter()
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -80,16 +82,19 @@ export function ParallaxSection({ id }: { id: string }) {
       icon: <BarChart className="h-16 w-16 text-[#7DF9FF]" />,
       title: "Marketing",
       description: "Développez votre visibilité et attirez de nouveaux clients",
+      href: "/services/marketing"
     },
     {
       icon: <Users className="h-16 w-16 text-[#7DF9FF]" />,
       title: "Ventes",
       description: "Optimisez votre processus commercial et augmentez vos revenus",
+      href: "/services/ventes"
     },
     {
       icon: <Zap className="h-16 w-16 text-[#7DF9FF]" />,
       title: "Tech",
       description: "Transformez votre entreprise avec des solutions technologiques innovantes",
+      href: "/services/tech"
     },
   ]
 
@@ -100,7 +105,11 @@ export function ParallaxSection({ id }: { id: string }) {
       {/* Desktop view - grid layout */}
       <div className="relative hidden h-full md:grid md:grid-cols-3">
         {/* First element - left */}
-        <motion.div className="flex items-center justify-center p-6" style={{ y: y1, opacity }}>
+        <motion.div 
+          className="flex items-center justify-center p-6 cursor-pointer hover:scale-105 transition-transform" 
+          style={{ y: y1, opacity }}
+          onClick={() => router.push(items[0].href)}
+        >
           <div className="flex flex-col items-center text-center text-white">
             {items[0].icon}
             <h2 className="mt-4 text-4xl font-bold">{items[0].title}</h2>
@@ -109,7 +118,11 @@ export function ParallaxSection({ id }: { id: string }) {
         </motion.div>
 
         {/* Second element - center */}
-        <motion.div className="flex items-center justify-center p-6" style={{ y: y2, opacity }}>
+        <motion.div 
+          className="flex items-center justify-center p-6 cursor-pointer hover:scale-105 transition-transform" 
+          style={{ y: y2, opacity }}
+          onClick={() => router.push(items[1].href)}
+        >
           <div className="flex flex-col items-center text-center text-white">
             {items[1].icon}
             <h2 className="mt-4 text-4xl font-bold">{items[1].title}</h2>
@@ -118,7 +131,11 @@ export function ParallaxSection({ id }: { id: string }) {
         </motion.div>
 
         {/* Third element - right */}
-        <motion.div className="flex items-center justify-center p-6" style={{ y: y3, opacity }}>
+        <motion.div 
+          className="flex items-center justify-center p-6 cursor-pointer hover:scale-105 transition-transform" 
+          style={{ y: y3, opacity }}
+          onClick={() => router.push(items[2].href)}
+        >
           <div className="flex flex-col items-center text-center text-white">
             {items[2].icon}
             <h2 className="mt-4 text-4xl font-bold">{items[2].title}</h2>
@@ -153,7 +170,8 @@ export function ParallaxSection({ id }: { id: string }) {
                   setMobileActiveIndex((current) => (current - 1 + items.length) % items.length);
                 }
               }}
-              className="flex flex-col items-center text-center text-white w-full touch-pan-x"
+              onClick={() => router.push(items[mobileActiveIndex].href)}
+              className="flex flex-col items-center text-center text-white w-full touch-pan-x cursor-pointer"
             >
               <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
                 {items[mobileActiveIndex].icon}
