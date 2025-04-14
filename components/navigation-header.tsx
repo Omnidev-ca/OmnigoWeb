@@ -19,10 +19,10 @@ export function NavigationHeader() {
         </Link>
 
         <nav className="hidden gap-6 md:flex">
-          <Link href="#" className="text-sm font-medium hover:text-[#7DF9FF]">
+          <Link href="/" className="text-sm font-medium hover:text-[#7DF9FF]">
             Accueil
           </Link>
-          <Link href="#" className="text-sm font-medium hover:text-[#7DF9FF]">
+          <Link href="/services" className="text-sm font-medium hover:text-[#7DF9FF]">
             Nos services
           </Link>
           <Link href="#" className="text-sm font-medium hover:text-[#7DF9FF]">
@@ -44,10 +44,10 @@ export function NavigationHeader() {
           <SheetContent side="right">
             <SheetTitle className="text-lg font-bold mb-4">Menu</SheetTitle>
             <div className="flex flex-col gap-6 pt-6">
-              <Link href="#" className="text-lg font-medium hover:text-[#7DF9FF]">
+              <Link href="/" className="text-lg font-medium hover:text-[#7DF9FF]">
                 Accueil
               </Link>
-              <Link href="#" className="text-lg font-medium hover:text-[#7DF9FF]">
+              <Link href="/services" className="text-lg font-medium hover:text-[#7DF9FF]">
                 Nos services
               </Link>
               <Link href="#" className="text-lg font-medium hover:text-[#7DF9FF]">
