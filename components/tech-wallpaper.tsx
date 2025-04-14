@@ -12,10 +12,14 @@ export default function TechWallpaper() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    // Set canvas to full window size
+    // Set canvas to hero section size
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      const heroSection = document.querySelector('section[class*="h-[90vh]"]')
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect()
+        canvas.width = rect.width
+        canvas.height = rect.height
+      }
     }
 
     resizeCanvas()
@@ -59,7 +63,7 @@ export default function TechWallpaper() {
     }
   }, [])
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full bg-white" />
+  return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-[90vh] bg-white" />
 }
 
 // Types

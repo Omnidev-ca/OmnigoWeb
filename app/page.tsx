@@ -15,6 +15,7 @@ import { AnimatedRoad } from "@/components/animated-road"
 import { ParallaxSection } from "@/components/parallax-section"
 import { features } from "@/components/features-data"
 import { InteractiveProcess } from "@/components/interactive-process"
+import TechWallpaper from "@/components/tech-wallpaper"
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -64,6 +65,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative flex flex-col items-center justify-center overflow-hidden py-20 md:py-32 h-[90vh]">
+        <TechWallpaper />
         <AnimatedPath className="absolute top-50 left-0 right-0 z-0 w-full" />
         <div className="container relative z-10 px-4 text-center md:px-6">
           <div className="mx-auto max-w-3xl space-y-4">
