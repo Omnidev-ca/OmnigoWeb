@@ -6,11 +6,11 @@ import { OmnigoLogoWhite } from "./omnigo-logo-white"
 
 export function Footer() {
   return (
-    <footer className="bg-black text-white py-16 relative z-50">
+    <footer className="bg-black text-white py-16 relative">
       <div className="container mx-auto px-4">
         <div className="flex flex-col">
           {/* Logo */}
-          <OmnigoLogoWhite className="flex justify-end" />
+          <OmnigoLogoWhite className="flex justify-start" />
 
           {/* Main content */}
           <div className="mb-16">
@@ -69,7 +69,7 @@ export function Footer() {
           </div>
 
           {/* Arrow up */}
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <Link
               href="#top"
               className="text-[#7DF9FF] hover:text-[#7DF9FF]/80 transition-colors"
@@ -83,7 +83,7 @@ export function Footer() {
               </svg>
 
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

@@ -1,812 +1,290 @@
 "use client"
+import { useState } from "react"
+import { MapPin, ChevronRight, ChevronLeft, Users, BarChart, ArrowRight, Compass, Target, Zap, ShoppingCart, Globe, Palette } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
-import { useEffect, useRef, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { MotionPathPlugin } from "gsap/MotionPathPlugin"
-import { Car } from "@/components/car"
-import { Road } from "@/components/road"
-import { Road as RoadPhone } from "@/components/roadPhone"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import TechWallpaper from "@/components/tech-wallpaper"
+import { AnimatedPath } from "@/components/animated-path"
+import { NavigationHeader } from "@/components/navigation-header"
+import { FeatureCard } from "@/components/feature-card"
+import { Footer } from "@/components/footer"
+import { TestimonialCarousel } from "@/components/testimonial-carousel"
+import { FeaturesCarousel } from "@/components/features-carousel"
+import { FloatingElements } from "@/components/floating-elements"
+import { AnimatedRoad } from "@/components/animated-road"
+import { ParallaxSection } from "@/components/parallax-section"
+import { features } from "@/components/features-data"
 
-export default function HomePage() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const carRef = useRef<HTMLDivElement>(null)
-  const roadRef = useRef<SVGSVGElement>(null)
-  const roadPhoneRef = useRef<SVGSVGElement>(null)
-  const [language, setLanguage] = useState<"fr" | "en">("fr")
-  const [isMobile, setIsMobile] = useState(false)
-  const [contentHeight, setContentHeight] = useState(0)
+export default function Home() {
+  const [currentStep, setCurrentStep] = useState(0)
+  const steps = [
+    {
+      number: "01",
+      title: "Discover Your Destination",
+      description: "We help you define clear, achievable business objectives.",
+    },
+    {
+      number: "02",
+      title: "Map Your Route",
+      description: "Develop a customized strategy tailored to your specific needs.",
+    },
+    {
+      number: "03",
+      title: "Navigate Obstacles",
+      description: "Identify potential challenges and create contingency plans.",
+    },
+    {
+      number: "04",
+      title: "Reach Your Destination",
+      description: "Execute your plan with our ongoing support and guidance.",
+    },
+  ]
 
-  useEffect(() => {
-    // Check if we're on mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1367 || window.innerHeight < 724)
-    }
-
-    // Initial check
-    checkMobile()
-
-    // Add resize listener
-    window.addEventListener("resize", checkMobile)
-
-    // Cleanup
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
-
-  useEffect(() => {
-    if (isMobile) {
-      // Calculate total height of all sections including margins
-      const sections = document.querySelectorAll('.section')
-      let totalHeight = 0
-      
-      sections.forEach((section, index) => {
-        const sectionHeight = section.getBoundingClientRect().height
-        const sectionStyle = window.getComputedStyle(section)
-        const marginTop = parseFloat(sectionStyle.marginTop)
-        const marginBottom = parseFloat(sectionStyle.marginBottom)
-        
-        // Add section height and its margins
-        totalHeight += sectionHeight + marginTop + marginBottom
-      })
-      
-      // Add some extra space for the road to end naturally
-      totalHeight += 200
-      setContentHeight(totalHeight)
-    }
-  }, [isMobile])
-
-  useEffect(() => {
-    // Register GSAP plugins
-    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin)
-
-    const ctx = gsap.context(() => {
-      // Create the animation for the car following the road
-      if (carRef.current) {
-        if (isMobile && roadPhoneRef.current) {
-          // Animation for mobile road
-          const roadPath = roadPhoneRef.current.querySelector("#roadPath") as SVGPathElement
-
-          if (roadPath) {
-            // Kill any existing animation first
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-            
-            gsap.to(carRef.current, {
-              motionPath: {
-                path: roadPath,
-                align: roadPath,
-                alignOrigin: [0.5, 0.5],
-                autoRotate: true,
-              },
-              ease: "none",
-              scrollTrigger: {
-                trigger: containerRef.current,
-                start: "-5% top",
-                end: isMobile ? `+=${contentHeight}px` : "bottom bottom",
-                scrub: 2,
-                invalidateOnRefresh: true,
-                refreshPriority: 1
-              },
-            })
-          }
-        } else if (!isMobile && roadRef.current) {
-          // Animation for desktop road
-          const roadPath = roadRef.current.querySelector("#roadPath") as SVGPathElement
-
-          if (roadPath) {
-            // Kill any existing animation first
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-            
-            gsap.to(carRef.current, {
-              motionPath: {
-                path: roadPath,
-                align: roadPath,
-                alignOrigin: [0.5, 0.5],
-                autoRotate: true,
-              },
-              ease: "none",
-              scrollTrigger: {
-                trigger: containerRef.current,
-                start: "-5% top",
-                end: "bottom bottom",
-                scrub: 0.5,
-                invalidateOnRefresh: true,
-                refreshPriority: 1
-              },
-            })
-          }
-        }
-      }
-
-      // Animate sections as they come into view
-      if (isMobile) {
-        // Mobile animations
-        gsap.utils.toArray<HTMLElement>(".section").forEach((section, i) => {
-          gsap.fromTo(
-            section,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              scrollTrigger: {
-                trigger: section,
-                start: "top 85%",
-                toggleActions: "play none none reverse",
-              },
-            },
-          )
-        })
-      } else {
-        // Desktop animations (keep existing)
-        gsap.utils.toArray<HTMLElement>(".section").forEach((section, i) => {
-          gsap.fromTo(
-            section,
-            { opacity: 0, y: 50 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.5,
-              scrollTrigger: {
-                trigger: section,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
-              },
-            },
-          )
-        })
-      }
-    }, containerRef)
-
-    return () => ctx.revert()
-  }, [isMobile, contentHeight])
-
-  const toggleLanguage = () => {
-    setLanguage(language === "fr" ? "en" : "fr")
+  const nextStep = () => {
+    setCurrentStep((prev) => (prev + 1) % steps.length)
   }
 
+  const prevStep = () => {
+    setCurrentStep((prev) => (prev - 1 + steps.length) % steps.length)
+  }
+
+  const handleScrollToFeatures = () => {
+    // On récupère la section cible
+    const featuresSection = document.getElementById("features-section");
+    // On déclenche le scroll avec une animation smooth
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
-    <main className="relative overflow-hidden bg-white">
-      <Header />
-      {/* <BubbleBackground /> */}
-      <TechWallpaper />
-      {/* Language Switcher */}
-      <div className="fixed top-20 left-4 z-50">
-        <button
-          onClick={toggleLanguage}
-          className="flex items-center justify-center w-10 h-10 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-          aria-label={language === "fr" ? "Switch to English" : "Passer au français"}
-        >
-          {language === "fr" ? (
-            <span className="text-sm font-bold">🇫🇷</span>
-          ) : (
-            <span className="text-sm font-bold">🇬🇧</span>
-          )}
-        </button>
-      </div>
+    <div className="flex min-h-screen flex-col">
+      <FloatingElements />
+      <NavigationHeader />
 
-      <div ref={containerRef} className="relative mt-[130px]">
-        {/* Road spans the entire page */}
-        <div className="relative w-full" style={{ height: isMobile ? `${contentHeight}px` : "500vh" }}>
-          <div className="absolute top-0 left-0 w-full h-full z-40">
-            {isMobile ? <RoadPhone ref={roadPhoneRef} /> : <Road ref={roadRef} />}
-          </div>
-
-          {/* Car that follows the road */}
-          <div ref={carRef} className="absolute top-0 left-0 z-50">
-            <Car />
-          </div>
-
-          <h1 className="text-6xl font-bold mb-4 text-center p-20 ">
-            Votre projet mérite d'avoir de <span className="text-[#7DF9FF]">l'impact</span> !
-          </h1>
-
-          {isMobile && (
-            <div className="relative w-full">
-              {/* First section */}
-              <section className="section w-[90%] mx-auto my-24 z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-                <p className="text-xl mb-6 text-[#4d4d4f]">Notre mission, contribuer au succès des PME et des OBNL</p>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Commencer</Button>
-              </section>
-
-              {/* Second section */}
-              <section className="section w-[90%] mx-auto my-24 z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-                <div className="mb-6">
-                  <img src="image.png" alt="Solutions sur mesure" className="w-full h-auto rounded-lg mb-4" />
-                </div>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">En savoir plus</Button>
-              </section>
-
-              {/* Third section */}
-              <section className="section w-[90%] mx-auto my-24 z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-                <h2 className="text-4xl font-bold mb-4">NOS SERVICES</h2>
-                <ul className="text-lg mb-6 text-[#4d4d4f] space-y-2">
-                  <li>Planification stratégique</li>
-                  <li>Marketing numérique</li>
-                  <li>Programmation</li>
-                  <li>Performances publicitaires</li>
-                </ul>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Découvrir</Button>
-              </section>
-
-              {/* Fourth section */}
-              <section className="section w-[90%] mx-auto my-24 z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-                <p className="text-lg text-[#4d4d4f] text-center mb-8">
-                  Nous offrons une présence numérique forte et multicanale à des prix honnêtes grâce à notre équipe
-                  multidisciplinaire. Notre service est transparent, rapide et flexible, afin de vous aider à atteindre
-                  vos objectifs et à réussir sur le marché en ligne.
-                </p>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Notre impact</Button>
-              </section>
-
-              {/* Clients section */}
-              <section className="section w-[90%] mx-auto my-24 z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-                <h2 className="text-4xl font-bold mb-6 text-center">Ils nous font confiance</h2>
-                <p className="text-lg text-[#4d4d4f] text-center mb-8">
-                  Nous avons établi des relations solides avec nos clients. Devenez notre nouveau client et n'attendez
-                  rien de moins que le meilleur de l'industrie.
-                </p>
-
-                <div className="w-full overflow-hidden relative p-4">
-                  <div className="flex flex-col space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Akisens-300x134.png"
-                          alt="Logo client 1"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Arts-et-Ville-300x126.png"
-                          alt="Logo client 2"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Berkayly-300x59.png"
-                          alt="Logo client 3"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Pacte-de-rue-300x78.png"
-                          alt="Logo client 4"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        const modal = document.getElementById("clientsModal")
-                        if (modal) modal.classList.remove("hidden")
-                      }}
-                      className="mx-auto mt-2 px-4 py-2 bg-[#7DF9FF] text-black rounded-md text-sm font-medium hover:bg-[#7DF9FF]/80 transition-colors"
-                    >
-                      Voir tous nos clients
-                    </button>
-                  </div>
-                </div>
-              </section>
-
-              {/* Réalisations section */}
-              <section className="section w-[90%] mx-auto my-24 z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
-                <h2 className="text-4xl font-bold mb-6 text-center">Nos Réalisations</h2>
-                <p className="text-lg text-[#4d4d4f] text-center mb-8">
-                  Nous sommes fiers de nos projets créatifs et innovants, qui sont conçus sur mesure pour répondre aux
-                  besoins de nos clients.
-                </p>
-
-                <div className="w-full overflow-hidden relative p-4">
-                  <div className="flex flex-col space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/images_realisation/numerique.jpg"
-                          alt="Réalisation 1"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/images_realisation/publicitaire.jpg"
-                          alt="Réalisation 2"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/images_realisation/shopify.jpg"
-                          alt="Réalisation 3"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/images_realisation/identite.jpg"
-                          alt="Réalisation 4"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
+      {/* Hero Section */}
+      <section className="relative flex flex-col items-center justify-center overflow-hidden py-20 md:py-32 h-[90vh]">
+        <AnimatedPath className="absolute top-50 left-0 right-0 z-0 w-full" />
+        <div className="container relative z-10 px-4 text-center md:px-6">
+          <div className="mx-auto max-w-3xl space-y-4">
+            <div className="inline-flex items-center rounded-full border border-black/10 bg-white px-3 py-1 text-sm font-medium shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-[#7DF9FF]"></span>
+              <span className="ml-2">Votre projet commence ici</span>
             </div>
-          )}
-
-          {!isMobile && (
-            <>
-              {/* Content Sections positioned along the road */}
-              <section
-                className={`section ${
-                  isMobile
-                    ? "absolute left-1/2 transform -translate-x-1/2 max-w-[90%] w-full"
-                    : "absolute top-[45vh] right-[50vw] max-w-md"
-                } z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md`}
-                style={isMobile ? { top: `${isMobile ? 50 : 0}vh` } : {}}
-              >
-                <p className="text-xl mb-6 text-[#4d4d4f]">Notre mission, contribuer au succès des PME et des OBNL</p>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Commencer</Button>
-              </section>
-
-              <section
-                className={`section ${
-                  isMobile
-                    ? "absolute left-1/2 transform -translate-x-1/2 max-w-[90%] w-full"
-                    : "absolute top-[92vh] left-[50vw] max-w-md"
-                } z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md`}
-                style={isMobile ? { top: `${isMobile ? 50 : 0}vh` } : {}}
-              >
-                <div className="mb-6">
-                  <img src="image.png" alt="Solutions sur mesure" className="w-full h-auto rounded-lg mb-4" />
-                </div>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">En savoir plus</Button>
-              </section>
-
-              <section
-                className={`section ${
-                  isMobile
-                    ? "absolute left-1/2 transform -translate-x-1/2 max-w-[90%] w-full"
-                    : "absolute top-[157vh] right-[50vw] max-w-md"
-                } z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md`}
-                style={isMobile ? { top: `${isMobile ? 50 : 0}vh` } : {}}
-              >
-                <h2 className="text-4xl font-bold mb-4">NOS SERVICES</h2>
-                <ul className="text-lg mb-6 text-[#4d4d4f] space-y-2">
-                  <li>Planification stratégique</li>
-                  <li>Marketing numérique</li>
-                  <li>Programmation</li>
-                  <li>Performances publicitaires</li>
-                </ul>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Découvrir</Button>
-              </section>
-
-              <section
-                className={`section ${
-                  isMobile
-                    ? "absolute left-1/2 transform -translate-x-1/2 max-w-[90%] w-full"
-                    : "absolute top-[217vh] left-[50vw] max-w-md"
-                } z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md`}
-                style={isMobile ? { top: `${isMobile ? 50 : 0}vh` } : {}}
-              >
-                <p className="text-lg text-[#4d4d4f] text-center mb-8">
-                  Nous offrons une présence numérique forte et multicanale à des prix honnêtes grâce à notre équipe
-                  multidisciplinaire. Notre service est transparent, rapide et flexible, afin de vous aider à atteindre
-                  vos objectifs et à réussir sur le marché en ligne.
-                </p>
-                <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/80">Notre impact</Button>
-              </section>
-
-              <section
-                className={`section ${
-                  isMobile
-                    ? "absolute left-1/2 transform -translate-x-1/2 max-w-[90%] w-full"
-                    : "absolute top-[275vh] left-1/2 transform -translate-x-1/2 max-w-3xl w-[90%] md:left-[20vw] md:transform-none"
-                } z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md`}
-                style={isMobile ? { top: `${isMobile ? 50 : 0}vh` } : {}}
-              >
-                <h2 className="text-4xl font-bold mb-6 text-center">Ils nous font confiance</h2>
-                <p className="text-lg text-[#4d4d4f] text-center mb-8">
-                  Nous avons établi des relations solides avec nos clients. Devenez notre nouveau client et n'attendez
-                  rien de moins que le meilleur de l'industrie.
-                </p>
-
-                {/* Version desktop */}
-                <div className="hidden md:block w-full overflow-hidden relative p-4">
-                  <div className="flex animate-carousel space-x-8 hover:[animation-play-state:paused]">
-                    {/* Premier groupe de logos */}
-                    <div className="flex space-x-8 min-w-max">
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Akisens-300x134.png"
-                          alt="Logo client 1"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Arts-et-Ville-300x126.png"
-                          alt="Logo client 2"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Berkayly-300x59.png"
-                          alt="Logo client 3"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Pacte-de-rue-300x78.png"
-                          alt="Logo client 4"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/SKAL-300x133.png"
-                          alt="Logo client 5"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Visibilite-360.png"
-                          alt="Logo client 6"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/HappieRH.png"
-                          alt="Logo client 7"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/La-Station-300x74.jpeg"
-                          alt="Logo client 8"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                    </div>
-                    {/* Duplication du groupe pour l'effet de boucle infinie */}
-                    <div className="flex space-x-8 min-w-max">
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Akisens-300x134.png"
-                          alt="Logo client 1"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Arts-et-Ville-300x126.png"
-                          alt="Logo client 2"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Berkayly-300x59.png"
-                          alt="Logo client 3"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Pacte-de-rue-300x78.png"
-                          alt="Logo client 4"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/SKAL-300x133.png"
-                          alt="Logo client 5"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/Visibilite-360.png"
-                          alt="Logo client 6"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/HappieRH.png"
-                          alt="Logo client 7"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/logo_entreprises/La-Station-300x74.jpeg"
-                          alt="Logo client 8"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Version mobile */}
-                <div className="md:hidden w-full overflow-hidden relative p-4">
-                  <div className="flex flex-col space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Akisens-300x134.png"
-                          alt="Logo client 1"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Arts-et-Ville-300x126.png"
-                          alt="Logo client 2"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Berkayly-300x59.png"
-                          alt="Logo client 3"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                      <div className="bg-white rounded-lg flex items-center justify-center p-3 shadow-sm">
-                        <img
-                          src="/logo_entreprises/Pacte-de-rue-300x78.png"
-                          alt="Logo client 4"
-                          className="max-h-12 w-auto object-contain"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Bouton pour voir plus de logos */}
-                    <button
-                      onClick={() => {
-                        const modal = document.getElementById("clientsModal")
-                        if (modal) modal.classList.remove("hidden")
-                      }}
-                      className="mx-auto mt-2 px-4 py-2 bg-[#7DF9FF] text-black rounded-md text-sm font-medium hover:bg-[#7DF9FF]/80 transition-colors"
-                    >
-                      Voir tous nos clients
-                    </button>
-
-                    {/* Modal popup pour afficher tous les logos */}
-                    <div
-                      id="clientsModal"
-                      className="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
-                    >
-                      <div className="bg-white rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-                        <div className="flex justify-between items-center mb-4">
-                          <h3 className="text-xl font-bold">Nos clients</h3>
-                          <button
-                            onClick={() => {
-                              const modal = document.getElementById("clientsModal")
-                              if (modal) modal.classList.add("hidden")
-                            }}
-                            className="text-gray-500 hover:text-black"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <line x1="18" y1="6" x2="6" y2="18"></line>
-                              <line x1="6" y1="6" x2="18" y2="18"></line>
-                            </svg>
-                          </button>
-                        </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/Akisens-300x134.png"
-                              alt="Logo client 1"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/Arts-et-Ville-300x126.png"
-                              alt="Logo client 2"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/Berkayly-300x59.png"
-                              alt="Logo client 3"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/Pacte-de-rue-300x78.png"
-                              alt="Logo client 4"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/SKAL-300x133.png"
-                              alt="Logo client 5"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/Visibilite-360.png"
-                              alt="Logo client 6"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/HappieRH.png"
-                              alt="Logo client 7"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                          <div className="bg-white border rounded-lg flex items-center justify-center p-4 shadow-sm">
-                            <img
-                              src="/logo_entreprises/La-Station-300x74.jpeg"
-                              alt="Logo client 8"
-                              className="max-h-16 w-auto object-contain"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section
-                className={`section ${
-                  isMobile
-                    ? "absolute left-1/2 transform -translate-x-1/2 max-w-[90%] w-full"
-                    : "absolute top-[335vh] left-1/2 transform -translate-x-1/2 max-w-3xl w-[90%] md:left-auto md:right-[20vw] md:transform-none"
-                } z-10 bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md`}
-                style={isMobile ? { top: `${isMobile ? 50 : 0}vh` } : {}}
-              >
-                <h2 className="text-4xl font-bold mb-6 text-center">Nos Réalisations</h2>
-                <p className="text-lg text-[#4d4d4f] text-center mb-8">
-                  Nous sommes fiers de nos projets créatifs et innovants, qui sont conçus sur mesure pour répondre aux
-                  besoins de nos clients.
-                </p>
-
-                {/* Version desktop */}
-                <div className="hidden md:block w-full overflow-hidden relative p-4">
-                  <div className="flex animate-carousel space-x-8 hover:[animation-play-state:paused]">
-                    {/* Premier groupe de logos */}
-                    <div className="flex space-x-8 min-w-max">
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/numerique.jpg"
-                          alt="Logo client 1"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/publicitaire.jpg"
-                          alt="Logo client 2"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/shopify.jpg"
-                          alt="Logo client 3"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/identite.jpg"
-                          alt="Logo client 4"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                    </div>
-                    {/* Duplication du groupe pour l'effet de boucle infinie */}
-                    <div className="flex space-x-8 min-w-max">
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/numerique.jpg"
-                          alt="Logo client 1"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/publicitaire.jpg"
-                          alt="Logo client 2"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/shopify.jpg"
-                          alt="Logo client 3"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/identite.jpg"
-                          alt="Logo client 4"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Version mobile */}
-                <div className="md:hidden w-full overflow-hidden relative p-4">
-                  <div className="flex flex-col space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/numerique.jpg"
-                          alt="Logo client 1"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/publicitaire.jpg"
-                          alt="Logo client 2"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/shopify.jpg"
-                          alt="Logo client 3"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                      <div className="w-36 h-24 bg-white rounded-lg flex items-center justify-center p-4 hover:shadow-lg transition-all duration-300 hover:scale-105">
-                        <img
-                          src="/images_realisation/identite.jpg"
-                          alt="Logo client 4"
-                          className="max-h-16 max-w-28 object-contain"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </>
-          )}
+            <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
+              Votre projet mérite d'avoir de <span className="text-[#7DF9FF]">l'impact </span> !
+            </h1>
+            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
+              Notre mission, contribuer au succès des PME et des OBNL. 
+            </p>
+            <div className="flex flex-col justify-center gap-2 min-[400px]:flex-row">
+              <Button className="bg-black text-white hover:bg-black/90">
+                <MapPin className="h-5 w-5" /> Prendre rendez-vous
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button variant="outline" className="border-black/20">
+                À propos
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+
+        
+
+        <div className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2 transform">
+          {/* Remplacez <a> par un <div> ou <button> pour pouvoir intercepter l'événement en React */}
+          <div
+            onClick={handleScrollToFeatures}
+            className="flex h-12 w-12 animate-bounce items-center justify-center rounded-full bg-[#7DF9FF] shadow-lg cursor-pointer"
+          >
+            <ChevronRight className="h-6 w-6 rotate-90 text-black" />
+          </div>
+        </div>
+      </section>
+
+      {/* Animated Road Section */}
+      {/* <section className="py-16">
+        <div>
+          <div className="mb-8 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              La route vers <span className="text-[#7DF9FF]">Excellence</span>
+            </h2>
+            <p className="mt-4 max-w-[700px] text-gray-500 md:text-xl">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+
+          <AnimatedRoad className="w-full" />
+        </div>
+      </section> */}
+
+      {/* Parallax Section */}
+      <ParallaxSection id="features-section" />
+
+      {/* Features Section */}
+      <section className=" bg-black py-20">
+        <div className="container px-4 md:px-6">
+          <div className="mb-12 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl">
+              Nos réalisations
+            </h2>
+            <p className="mt-4 max-w-[700px] text-gray-400 md:text-xl">
+              Nous sommes fiers de nos projets créatifs et innovants, qui sont conçus sur mesure pour répondre aux besoins de nos clients.
+            </p>
+          </div>
+
+          {/* Mobile Carousel */}
+          <FeaturesCarousel />
+
+          {/* Desktop Grid */}
+          <div className="container mx-auto px-4">
+            <div className={`hidden lg:grid gap-6 ${features.length % 3 === 0 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+              {features.map((feature, index) => (
+                <FeatureCard
+                  key={index}
+                  icon={feature.icon}
+                  title={feature.title}
+                  description={feature.description}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="relative py-20">
+        <div className="container px-4 md:px-6">
+          <div className="mb-12 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Your Roadmap to Success</h2>
+            <p className="mt-4 max-w-[700px] text-gray-500 md:text-xl">
+              Follow our proven path to achieve your business goals.
+            </p>
+          </div>
+
+          {/* Desktop version */}
+          <div className="relative mx-auto max-w-4xl hidden md:block">
+            <div className="absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 transform bg-[#7DF9FF]"></div>
+            <div className="space-y-12">
+              {steps.map((step, index) => (
+                <div key={index} className={`relative flex ${index % 2 === 0 ? "justify-start" : "justify-end"}`}>
+                  <div className="relative w-full max-w-md rounded-lg border border-black/10 bg-white p-6 shadow-lg md:w-2/3">
+                    <div className="absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-[#7DF9FF] text-black">
+                      <span className="font-bold">{step.number}</span>
+                    </div>
+                    <h3 className="mb-2 text-xl font-bold">{step.title}</h3>
+                    <p className="text-gray-500">{step.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile version */}
+          <div className="md:hidden">
+            <div className="relative mx-auto max-w-sm">
+              <motion.div
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={1}
+                onDragEnd={(e, { offset, velocity }) => {
+                  const swipe = Math.abs(offset.x) * velocity.x;
+                  if (swipe < -100) {
+                    nextStep();
+                  } else if (swipe > 100) {
+                    prevStep();
+                  }
+                }}
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentStep}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative rounded-xl border border-black/10 bg-white p-8 shadow-lg min-h-[200px]"
+                  >
+                    <div className="absolute -top-4 left-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#7DF9FF] text-black shadow-md">
+                      <span className="font-bold text-lg">{steps[currentStep].number}</span>
+                    </div>
+                    <div className="mt-4">
+                      <h3 className="mb-3 text-2xl font-bold">{steps[currentStep].title}</h3>
+                      <p className="text-gray-500 text-lg">{steps[currentStep].description}</p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </motion.div>
+
+              <div className="mt-6 flex items-center justify-between gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={prevStep}
+                  className="rounded-full border-black/10 bg-white shadow-md hover:bg-gray-50"
+                >
+                  <ChevronLeft className="h-5 w-5" />
+                  <span className="sr-only">Previous step</span>
+                </Button>
+
+                <div className="flex gap-2">
+                  {steps.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentStep(index)}
+                      className={`h-2 rounded-full transition-all ${
+                        index === currentStep ? "w-8 bg-[#7DF9FF]" : "w-2 bg-gray-200"
+                      }`}
+                      aria-label={`Go to step ${index + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={nextStep}
+                  className="rounded-full border-black/10 bg-white shadow-md hover:bg-gray-50"
+                >
+                  <ChevronRight className="h-5 w-5" />
+                  <span className="sr-only">Next step</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Carousel */}
+      <section className="bg-gray-50 py-20">
+        <div className="container px-4 md:px-6">
+          <div className="mb-8 flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Ils nous font confiance</h2>
+            <p className="mt-4 max-w-[700px] text-gray-500 md:text-xl">
+              Nous avons établi des relations solides avec nos clients. Devenez notre nouveau client et n'attendez rien de moins que le meilleur de l'industrie. 
+            </p>
+          </div>
+
+          <TestimonialCarousel />
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-black py-20 text-white">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col items-center text-center">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Prêt à trouver votre chemin ?</h2>
+            <p className="mt-4 max-w-[700px] text-gray-400 md:text-xl">
+              Commencez votre parcours avec nous aujourd'hui et naviguez vers le succès.
+            </p>
+            <Button className="mt-8 bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/90">
+              Prendre rendez-vous
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
 
       <Footer />
-    </main>
+    </div>
   )
 }
