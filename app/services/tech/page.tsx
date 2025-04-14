@@ -13,10 +13,6 @@ const features = [
     description: "Création de sites web modernes, performants et esthétiques.",
     icon: Code,
     details: [
-      "Développement front-end",
-      "Design UI/UX",
-      "Responsive design",
-      "Optimisation SEO"
     ]
   },
   {
@@ -24,10 +20,6 @@ const features = [
     description: "Développement d'applications sur mesure pour tous les appareils.",
     icon: Smartphone,
     details: [
-      "Applications web progressives",
-      "Applications mobiles natives",
-      "Applications multiplateformes",
-      "Intégration d'API"
     ]
   },
   {
@@ -35,10 +27,6 @@ const features = [
     description: "Solutions technologiques personnalisées pour répondre à vos besoins spécifiques.",
     icon: Cpu,
     details: [
-      "Développement sur mesure",
-      "Architecture logicielle",
-      "Tests et déploiement",
-      "Maintenance continue"
     ]
   },
   {
@@ -46,10 +34,6 @@ const features = [
     description: "Connexion et synchronisation de vos différents outils et systèmes.",
     icon: Database,
     details: [
-      "Intégration API",
-      "Migration de données",
-      "Synchronisation en temps réel",
-      "Formation et support"
     ]
   }
 ]

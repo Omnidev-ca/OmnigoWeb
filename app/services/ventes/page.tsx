@@ -13,10 +13,6 @@ const features = [
     description: "Stratégies de prospection professionnelle pour générer des leads qualifiés.",
     icon: MessageSquare,
     details: [
-      "Campagnes LinkedIn personnalisées",
-      "Séquences d'emails automatisées",
-      "Qualification des leads",
-      "Suivi des prospects"
     ]
   },
   {
@@ -24,10 +20,6 @@ const features = [
     description: "Mise en place d'une équipe commerciale performante et autonome.",
     icon: Users,
     details: [
-      "Recrutement de commerciaux",
-      "Formation aux techniques de vente",
-      "Mise en place de processus",
-      "Définition des objectifs"
     ]
   },
   {
@@ -35,10 +27,6 @@ const features = [
     description: "Mise en place et optimisation d'un système de gestion de la relation client.",
     icon: BarChart,
     details: [
-      "Choix de la solution CRM",
-      "Configuration personnalisée",
-      "Formation des équipes",
-      "Automatisation des processus"
     ]
   },
   {
@@ -46,10 +34,6 @@ const features = [
     description: "Utilisation de l'IA pour optimiser vos processus de vente et de service client.",
     icon: Brain,
     details: [
-      "Automatisation des réponses",
-      "Analyse des conversations",
-      "Personnalisation des messages",
-      "Optimisation des performances"
     ]
   }
 ]

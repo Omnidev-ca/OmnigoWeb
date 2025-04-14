@@ -6,6 +6,7 @@ import { ArrowRight, Sparkles, Target, ShoppingCart, Code } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { NavigationHeader } from "@/components/navigation-header"
 import { Footer } from "@/components/footer"
+import { AnimatedRoad } from "@/components/animated-road"
 
 const services = [
   {
@@ -157,6 +158,7 @@ export default function Services() {
             ))}
           </motion.div>
         </div>
+        <AnimatedRoad className="w-full" />
       </section>
 
       {/* Stats Section */}
