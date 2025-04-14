@@ -113,19 +113,19 @@ export default function Services() {
                 whileHover={{ scale: 1.05 }}
                 onHoverStart={() => setHoveredService(index)}
                 onHoverEnd={() => setHoveredService(null)}
-                className="relative overflow-hidden rounded-2xl bg-white shadow-lg"
+                className="relative overflow-hidden rounded-2xl bg-white shadow-lg flex flex-col h-full"
               >
                 <div 
                   className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 transition-opacity duration-300`}
                   style={{ opacity: hoveredService === index ? 0.1 : 0 }}
                 />
-                <div className="relative p-8">
+                <div className="relative p-8 flex flex-col h-full">
                   <div className="mb-6">
                     <service.icon className={`h-12 w-12 ${hoveredService === index ? 'text-white' : ''}`} style={{ color: service.color }} />
                   </div>
                   <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
                   <p className="text-gray-500 mb-6">{service.description}</p>
-                  <ul className="space-y-3 mb-8">
+                  <ul className="space-y-3 mb-8 flex-grow">
                     {service.features.map((feature, featureIndex) => (
                       <motion.li 
                         key={featureIndex}
@@ -140,7 +140,7 @@ export default function Services() {
                     ))}
                   </ul>
                   <Button 
-                    className={`w-full transition-all duration-300 ${hoveredService === index ? 'bg-black text-white' : 'bg-gray-100 text-gray-800'}`}
+                    className={`w-full transition-all duration-300 mt-auto ${hoveredService === index ? 'bg-black text-white' : 'bg-gray-100 text-gray-800'} hover:bg-[#000000]`}
                     onClick={() => {
                       const servicePaths: Record<string, string> = {
                         "Marketing Digital": "/services/marketing",

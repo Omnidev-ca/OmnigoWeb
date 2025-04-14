@@ -95,14 +95,14 @@ export default function TechPage() {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow"
+                className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow flex flex-col h-full"
               >
                 <div className="mb-6">
                   <feature.icon className="h-12 w-12 text-[#4ECDC4]" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
                 <p className="text-gray-500 mb-6">{feature.description}</p>
-                <ul className="space-y-3">
+                <ul className="space-y-3 mb-6 flex-grow">
                   {feature.details.map((detail, detailIndex) => (
                     <motion.li
                       key={detailIndex}
@@ -116,6 +116,9 @@ export default function TechPage() {
                     </motion.li>
                   ))}
                 </ul>
+                <Button className="w-full bg-[#4ECDC4] text-white hover:bg-[#4ECDC4]/90">
+                  En savoir plus
+                </Button>
               </motion.div>
             ))}
           </motion.div>
