@@ -133,10 +133,7 @@ export function ContactForm() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-md mx-auto p-8 bg-gray-900/50 backdrop-blur-sm rounded-xl border border-gray-800 shadow-2xl"
     >
-      <h2 className="text-3xl font-bold text-white mb-8 text-center">Contactez-nous</h2>
-      
       <form onSubmit={handleSubmit} className="space-y-6">
         <AnimatePresence mode="wait">
           {currentStep === 1 ? (
