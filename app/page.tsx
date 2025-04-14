@@ -14,6 +14,7 @@ import { FloatingElements } from "@/components/floating-elements"
 import { AnimatedRoad } from "@/components/animated-road"
 import { ParallaxSection } from "@/components/parallax-section"
 import { features } from "@/components/features-data"
+import { InteractiveProcess } from "@/components/interactive-process"
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0)
@@ -151,108 +152,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="relative py-20">
-        <div className="container px-4 md:px-6">
-          <div className="mb-12 flex flex-col items-center text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Your Roadmap to Success</h2>
-            <p className="mt-4 max-w-[700px] text-gray-500 md:text-xl">
-              Follow our proven path to achieve your business goals.
-            </p>
-          </div>
-
-          {/* Desktop version */}
-          <div className="relative mx-auto max-w-4xl hidden md:block">
-            <div className="absolute left-1/2 top-0 h-full w-1 -translate-x-1/2 transform bg-[#7DF9FF]"></div>
-            <div className="space-y-12">
-              {steps.map((step, index) => (
-                <div key={index} className={`relative flex ${index % 2 === 0 ? "justify-start" : "justify-end"}`}>
-                  <div className="relative w-full max-w-md rounded-lg border border-black/10 bg-white p-6 shadow-lg md:w-2/3">
-                    <div className="absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full bg-[#7DF9FF] text-black">
-                      <span className="font-bold">{step.number}</span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-bold">{step.title}</h3>
-                    <p className="text-gray-500">{step.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile version */}
-          <div className="md:hidden">
-            <div className="relative mx-auto max-w-sm">
-              <motion.div
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={1}
-                onDragEnd={(e, { offset, velocity }) => {
-                  const swipe = Math.abs(offset.x) * velocity.x;
-                  if (swipe < -100) {
-                    nextStep();
-                  } else if (swipe > 100) {
-                    prevStep();
-                  }
-                }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentStep}
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative rounded-xl border border-black/10 bg-white p-8 shadow-lg min-h-[200px]"
-                  >
-                    <div className="absolute -top-4 left-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#7DF9FF] text-black shadow-md">
-                      <span className="font-bold text-lg">{steps[currentStep].number}</span>
-                    </div>
-                    <div className="mt-4">
-                      <h3 className="mb-3 text-2xl font-bold">{steps[currentStep].title}</h3>
-                      <p className="text-gray-500 text-lg">{steps[currentStep].description}</p>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </motion.div>
-
-              <div className="mt-6 flex items-center justify-between gap-4">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={prevStep}
-                  className="rounded-full border-black/10 bg-white shadow-md hover:bg-gray-50"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                  <span className="sr-only">Previous step</span>
-                </Button>
-
-                <div className="flex gap-2">
-                  {steps.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentStep(index)}
-                      className={`h-2 rounded-full transition-all ${
-                        index === currentStep ? "w-8 bg-[#7DF9FF]" : "w-2 bg-gray-200"
-                      }`}
-                      aria-label={`Go to step ${index + 1}`}
-                    />
-                  ))}
-                </div>
-
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={nextStep}
-                  className="rounded-full border-black/10 bg-white shadow-md hover:bg-gray-50"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                  <span className="sr-only">Next step</span>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Interactive Process Section */}
+      <InteractiveProcess steps={steps} />
 
       {/* Testimonials Carousel */}
       <section className="bg-gray-50 py-20">
