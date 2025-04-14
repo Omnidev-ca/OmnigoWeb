@@ -39,7 +39,7 @@ const features = [
       "Tiktok",
       "Meta",
       "Google",
-      "DOOM",
+      "DOOH",
       "Geofencing"
     ]
   },
