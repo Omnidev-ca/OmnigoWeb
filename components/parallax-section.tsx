@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { MapPin, Navigation, Compass, Users, BarChart, Zap } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-export function ParallaxSection({ id }: { id: string }) {
+export function ParallaxSection({ id }: { id: string}) {
   const router = useRouter()
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({
@@ -106,41 +106,44 @@ export function ParallaxSection({ id }: { id: string }) {
       <div className="relative hidden h-full md:grid md:grid-cols-3">
         {/* First element - left */}
         <motion.div 
-          className="flex items-center justify-center p-6 cursor-pointer hover:scale-105 transition-transform" 
+          className="flex items-center justify-center p-6 cursor-pointer group relative" 
           style={{ y: y1, opacity }}
           onClick={() => router.push(items[0].href)}
         >
-          <div className="flex flex-col items-center text-center text-white">
+          <div className="flex flex-col items-center text-center text-white relative z-10">
             {items[0].icon}
             <h2 className="mt-4 text-4xl font-bold">{items[0].title}</h2>
             <p className="mt-2 max-w-md text-gray-400">{items[0].description}</p>
           </div>
+          <div className="absolute inset-4 bg-gradient-to-r from-[#7DF9FF]/0 to-[#7DF9FF]/0 rounded-xl transition-all duration-300 group-hover:from-[#7DF9FF]/10 group-hover:to-[#7DF9FF]/5" />
         </motion.div>
 
         {/* Second element - center */}
         <motion.div 
-          className="flex items-center justify-center p-6 cursor-pointer hover:scale-105 transition-transform" 
+          className="flex items-center justify-center p-6 cursor-pointer group relative" 
           style={{ y: y2, opacity }}
           onClick={() => router.push(items[1].href)}
         >
-          <div className="flex flex-col items-center text-center text-white">
+          <div className="flex flex-col items-center text-center text-white relative z-10">
             {items[1].icon}
             <h2 className="mt-4 text-4xl font-bold">{items[1].title}</h2>
             <p className="mt-2 max-w-md text-gray-400">{items[1].description}</p>
           </div>
+          <div className="absolute inset-4 bg-gradient-to-r from-[#7DF9FF]/0 to-[#7DF9FF]/0 rounded-xl transition-all duration-300 group-hover:from-[#7DF9FF]/10 group-hover:to-[#7DF9FF]/5" />
         </motion.div>
 
         {/* Third element - right */}
         <motion.div 
-          className="flex items-center justify-center p-6 cursor-pointer hover:scale-105 transition-transform" 
+          className="flex items-center justify-center p-6 cursor-pointer group relative" 
           style={{ y: y3, opacity }}
           onClick={() => router.push(items[2].href)}
         >
-          <div className="flex flex-col items-center text-center text-white">
+          <div className="flex flex-col items-center text-center text-white relative z-10">
             {items[2].icon}
             <h2 className="mt-4 text-4xl font-bold">{items[2].title}</h2>
             <p className="mt-2 max-w-md text-gray-400">{items[2].description}</p>
           </div>
+          <div className="absolute inset-4 bg-gradient-to-r from-[#7DF9FF]/0 to-[#7DF9FF]/0 rounded-xl transition-all duration-300 group-hover:from-[#7DF9FF]/10 group-hover:to-[#7DF9FF]/5" />
         </motion.div>
       </div>
 
@@ -171,13 +174,31 @@ export function ParallaxSection({ id }: { id: string }) {
                 }
               }}
               onClick={() => router.push(items[mobileActiveIndex].href)}
-              className="flex flex-col items-center text-center text-white w-full touch-pan-x cursor-pointer"
+              className="relative flex flex-col items-center text-center text-white w-full touch-pan-x cursor-pointer p-8 rounded-2xl"
             >
-              <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
+              {/* Fond animé uniquement sur l'élément */}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-[#7DF9FF]/10 via-[#7DF9FF]/5 to-transparent rounded-2xl"
+                animate={{
+                  backgroundPosition: ['0% 0%', '100% 100%'],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'linear'
+                }}
+              />
+              <motion.div 
+                className="relative z-10"
+                initial={{ scale: 0.8 }} 
+                animate={{ scale: 1 }} 
+                transition={{ duration: 0.5 }}
+              >
                 {items[mobileActiveIndex].icon}
               </motion.div>
-              <h2 className="mt-4 text-4xl font-bold">{items[mobileActiveIndex].title}</h2>
-              <p className="mt-2 max-w-md text-gray-400">{items[mobileActiveIndex].description}</p>
+              <h2 className="mt-4 text-4xl font-bold relative z-10">{items[mobileActiveIndex].title}</h2>
+              <p className="mt-2 max-w-md text-gray-400 relative z-10">{items[mobileActiveIndex].description}</p>
             </motion.div>
           </AnimatePresence>
         </div>

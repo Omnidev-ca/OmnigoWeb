@@ -1,8 +1,9 @@
 "use client"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,6 +20,26 @@ interface InteractiveProcessProps {
 export function InteractiveProcess({ steps }: InteractiveProcessProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
+  const [currentStep, setCurrentStep] = useState(0)
+  const [autoplay, setAutoplay] = useState(true)
+
+  const nextStep = () => {
+    setCurrentStep((prev) => (prev + 1) % steps.length)
+  }
+
+  const prevStep = () => {
+    setCurrentStep((prev) => (prev - 1 + steps.length) % steps.length)
+  }
+
+  useEffect(() => {
+    if (!autoplay) return
+
+    const interval = setInterval(() => {
+      nextStep()
+    }, 4000)
+
+    return () => clearInterval(interval)
+  }, [autoplay, steps.length])
 
   useEffect(() => {
     if (!containerRef.current || !cardsRef.current) return
@@ -97,8 +118,76 @@ export function InteractiveProcess({ steps }: InteractiveProcessProps) {
             <div className="absolute top-1/2 left-1/2 h-60 w-60 rounded-full bg-[#7DF9FF] blur-3xl background-element opacity-50"></div>
           </div>
 
-          {/* Grille des cartes */}
-          <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Version mobile (carousel) */}
+          <div className="lg:hidden">
+            <div className="relative overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.3 }}
+                  className="group relative"
+                  onHoverStart={() => setAutoplay(false)}
+                  onHoverEnd={() => setAutoplay(true)}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={1}
+                  onDragEnd={(e, { offset, velocity }) => {
+                    const swipe = Math.abs(offset.x) * velocity.x;
+                    if (swipe < -100) {
+                      nextStep();
+                    } else if (swipe > 100) {
+                      prevStep();
+                    }
+                  }}
+                >
+                  <div className="relative z-10 h-full rounded-2xl bg-white p-8 shadow-xl">
+                    <div className="absolute -top-4 -left-4 h-16 w-16 rounded-full bg-black flex items-center justify-center text-2xl font-bold text-white shadow-lg">
+                      {steps[currentStep].number}
+                    </div>
+                    <div className="mt-8">
+                      <h3 className="mb-4 text-2xl font-bold group-hover:text-[#7DF9FF] transition-colors duration-300">
+                        {steps[currentStep].title}
+                      </h3>
+                      <p className="text-gray-600">{steps[currentStep].description}</p>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#7DF9FF] to-[#00BFFF] opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl"></div>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="mt-6 flex justify-center gap-4">
+                <button
+                  onClick={prevStep}
+                  className="rounded-full bg-black/10 p-2 hover:bg-black/20"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <div className="flex items-center gap-2">
+                  {steps.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentStep(index)}
+                      className={`h-2 rounded-full transition-all ${
+                        index === currentStep ? "bg-[#7DF9FF] w-6" : "bg-gray-300 w-2"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <button
+                  onClick={nextStep}
+                  className="rounded-full bg-black/10 p-2 hover:bg-black/20"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Version desktop (grille) */}
+          <div ref={cardsRef} className="hidden lg:grid grid-cols-4 gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={index}
@@ -106,7 +195,7 @@ export function InteractiveProcess({ steps }: InteractiveProcessProps) {
                 className="group relative"
               >
                 <div className="relative z-10 h-full rounded-2xl bg-white p-8 shadow-xl transition-all duration-300 hover:shadow-2xl">
-                  <div className="absolute -top-4 -left-4 h-16 w-16 rounded-full bg-[#7DF9FF] flex items-center justify-center text-2xl font-bold text-black shadow-lg">
+                  <div className="absolute -top-4 -left-4 h-16 w-16 rounded-full bg-black flex items-center justify-center text-2xl font-bold text-white shadow-lg">
                     {step.number}
                   </div>
                   <div className="mt-8">
@@ -126,7 +215,7 @@ export function InteractiveProcess({ steps }: InteractiveProcessProps) {
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-4 rounded-full bg-black px-8 py-4 text-white shadow-lg cursor-pointer"
+              className="inline-flex items-center gap-4 rounded-full bg-[#7DF9FF] px-8 py-4 text-black shadow-lg cursor-pointer"
             >
               <span className="text-lg font-semibold">Découvrir notre processus</span>
               <svg
@@ -150,4 +239,4 @@ export function InteractiveProcess({ steps }: InteractiveProcessProps) {
       </div>
     </div>
   )
-} 
+}

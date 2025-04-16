@@ -151,31 +151,6 @@ export function AnimatedRoad({ className }: AnimatedRoadProps) {
           strokeLinecap="round"
           strokeDasharray="20 20"
         />
-
-        {/* Destination markers */}
-        <g ref={markersRef}>
-          <circle cx="300" cy="90" r="12" fill="#7DF9FF" />
-          <circle cx="700" cy="210" r="12" fill="#7DF9FF" />
-          <circle cx="1100" cy="90" r="12" fill="#7DF9FF" />
-        </g>
-
-        {/* Glow effects */}
-        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="10" result="blur" />
-          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-        </filter>
-
-        <g ref={glowsRef}>
-          <circle cx="300" cy="90" r="20" fill="#7DF9FF" filter="url(#glow)" />
-          <circle cx="700" cy="210" r="20" fill="#7DF9FF" filter="url(#glow)" />
-          <circle cx="1100" cy="90" r="20" fill="#7DF9FF" filter="url(#glow)" />
-        </g>
-
-        {/* Car/navigation pin */}
-        <g ref={carRef}>
-          <circle cx="0" cy="0" r="15" fill="#7DF9FF" />
-          <path d="M0,-25 L-10,0 L10,0 Z" fill="#7DF9FF" transform="translate(0, 0)" />
-        </g>
       </svg>
     </div>
   )

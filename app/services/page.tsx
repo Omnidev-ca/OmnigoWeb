@@ -77,7 +77,7 @@ export default function Services() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-gray-50 to-white">
-      <NavigationHeader />
+      <NavigationHeader  />
 
       {/* Services Section */}
       <section className="py-20">

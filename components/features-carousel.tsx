@@ -67,6 +67,7 @@ export function FeaturesCarousel() {
             <h3 className="mb-2 text-xl font-bold text-white">{features[current].title}</h3>
             <p className="text-gray-400">{features[current].description}</p>
           </div>
+          <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/90">En savoir plus</Button>
         </motion.div>
       </AnimatePresence>
 

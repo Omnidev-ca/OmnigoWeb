@@ -28,6 +28,9 @@ export function NavigationHeader() {
           <Link href="#" className="text-sm font-medium hover:text-[#7DF9FF]">
             Nous joindre
           </Link>
+          <Link href="#" className="text-sm font-medium hover:text-[#7DF9FF]">
+            À propos
+          </Link>
         </nav>
 
         <div className="hidden md:flex md:gap-2">
@@ -52,6 +55,9 @@ export function NavigationHeader() {
               </Link>
               <Link href="#" className="text-lg font-medium hover:text-[#7DF9FF]">
                 Nous joindre
+              </Link>
+              <Link href="#" className="text-lg font-medium hover:text-[#7DF9FF]">
+                À propos
               </Link>
               <div className="flex flex-col gap-2 pt-4">
                 <Button className="bg-[#7DF9FF] text-black"><MapPin className="h-5 w-5" /> Prendre rendez-vous</Button>

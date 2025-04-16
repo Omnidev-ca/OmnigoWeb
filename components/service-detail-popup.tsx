@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { X } from "lucide-react"
+import { X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface ServiceDetailPopupProps {
@@ -38,7 +38,13 @@ export function ServiceDetailPopup({ isOpen, onClose, title, content }: ServiceD
               <X className="h-5 w-5" />
             </Button>
             <h3 className="text-2xl font-bold mb-4">{title}</h3>
-            <p className="text-gray-600">{content}</p>
+            <p className="text-gray-600 mb-6">{content}</p>
+            <div className="flex justify-end">
+              <Button className="bg-[#7DF9FF] text-black hover:bg-[#7DF9FF]/90">
+                En savoir plus
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </motion.div>
         </motion.div>
       )}
