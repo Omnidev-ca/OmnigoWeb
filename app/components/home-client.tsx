@@ -73,7 +73,7 @@ export function HomeClient() {
               <span className="ml-2">Votre projet commence ici</span>
             </div>
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-              Votre projet mérite d'avoir de <span className="text-[#7DF9FF]">l'impact !</span>
+              Votre projet mérite d'avoir de {/* <span className="text-[#7DF9FF]"> */}l'impact !{/* </span> */}
               {/* {data.sections[0].contents[0].text.fr.split('l\'impact !').map((part: string, i: number) => 
                 i === 0 ? part : <><span className="text-[#7DF9FF]">l' impact !</span>{part}</>
               )} */}
